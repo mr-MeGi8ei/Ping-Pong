@@ -33,13 +33,19 @@ window = display.set_mode((win_width, win_height))
 display.set_caption("PingPong")
 background = transform.scale(image.load("background.png"), (win_width, win_height))
 
+
 game = True
 finish = False
 clock = time.Clock()
 fps = 60
 
+
 racket_l = Player('racket_l.png', 25, 400, 10, 80, 100)
 racket_r = Player('racket_r.png', 700, 200, 10, 80, 100)
+ball = GameSprite("ball.png", 200, 200, 5, 50,50)
+
+speed_x = ball.speed
+speed_y = ball.speed
 
 while game:
     for e in event.get():
@@ -48,10 +54,27 @@ while game:
 
     if finish != True:
         window.blit(background, (0,0))
+
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+
         racket_l.update_l()
         racket_r.update_r()
+
+        if ball.rect.y > win_height - 50 or ball.rect.y < 0:
+            speed_y *= -1
+
+        if sprite.collide_rect(racket_l, ball) or sprite.collide_rect(racket_r, ball):
+            speed_x *= -1
+
+        ball.reset()
         racket_l.reset()
         racket_r.reset()
+
+
+
+    display.update()
+    clock.tick(fps)
 
     display.update()
     clock.tick(fps)
