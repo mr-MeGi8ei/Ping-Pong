@@ -47,6 +47,12 @@ ball = GameSprite("ball.png", 200, 200, 5, 50,50)
 speed_x = ball.speed
 speed_y = ball.speed
 
+font.init()
+font = font.Font(None, 35)
+win_r = font.render("Left player win", True, (0,255,0))
+win_l = font.render("Right player win", True, (0,255,0))
+
+
 while game:
     for e in event.get():
         if e.type == QUIT:
@@ -67,14 +73,15 @@ while game:
         if sprite.collide_rect(racket_l, ball) or sprite.collide_rect(racket_r, ball):
             speed_x *= -1
 
+        if ball.rect.x < 0:
+            window.blit(win_l, (200,200))
+            finish = True
+        if ball.rect.x > win_width:
+            window.blit(win_r, (200,200))
+            finish = True
         ball.reset()
         racket_l.reset()
         racket_r.reset()
-
-
-
-    display.update()
-    clock.tick(fps)
 
     display.update()
     clock.tick(fps)
