@@ -33,12 +33,10 @@ window = display.set_mode((win_width, win_height))
 display.set_caption("PingPong")
 background = transform.scale(image.load("background.png"), (win_width, win_height))
 
-
 game = True
 finish = False
 clock = time.Clock()
 fps = 60
-
 
 racket_l = Player('racket_l.png', 25, 400, 10, 80, 100)
 racket_r = Player('racket_r.png', 700, 200, 10, 80, 100)
@@ -51,7 +49,6 @@ font.init()
 font = font.Font(None, 35)
 win_r = font.render("Left player win", True, (0,255,0))
 win_l = font.render("Right player win", True, (0,255,0))
-
 
 while game:
     for e in event.get():
@@ -74,10 +71,10 @@ while game:
             speed_x *= -1
 
         if ball.rect.x < 0:
-            window.blit(win_l, (200,200))
+            window.blit(win_l, (325,300))
             finish = True
         if ball.rect.x > win_width:
-            window.blit(win_r, (200,200))
+            window.blit(win_r, (325,300))
             finish = True
         ball.reset()
         racket_l.reset()
